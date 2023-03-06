@@ -4,8 +4,9 @@ class PostsController < ApplicationController
     @posts = Post.order(id: "DESC")
   end
   def create
-    Post.create(content: params[:content])
-    redirect_to action: :index  # 追記する
+    post = Post.create(content: params[:content])
+    render json:{ post: post }
+    #8行目では、7行目で定義した変数postの値を、postというキーとセットでJavaScriptに送信している
   end
 
 end
