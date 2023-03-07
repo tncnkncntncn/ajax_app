@@ -1,54 +1,31 @@
-# MySQL. Versions 5.5.8 and up are supported.
-#
-# Install the MySQL driver
-#   gem install mysql2
-#
-# Ensure the MySQL gem is defined in your Gemfile
-#   gem 'mysql2'
-#
-# And be sure to use new-style password hashing:
-#   https://dev.mysql.com/doc/refman/5.7/en/password-hashing.html
-#
 default: &default
-  adapter: mysql2
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password:
-  host: localhost
 
 development:
   <<: *default
+  adapter: mysql2
+  username: root
+  password:
+  host: localhost
   database: ajax_app_development
 
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
 test:
   <<: *default
+  adapter: mysql2
+  username: root
+  password:
+  host: localhost
   database: ajax_app_test
 
-# As with config/credentials.yml, you never want to store sensitive information,
-# like your database password, in your source code. If your source code is
-# ever seen by anyone, they now have access to your database.
-#
-# Instead, provide the password as a unix environment variable when you boot
-# the app. Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
-# for a full rundown on how to provide these environment variables in a
-# production deployment.
-#
-# On Heroku and other platform providers, you may have a full connection URL
-# available as an environment variable. For example:
-#
-#   DATABASE_URL="mysql2://myuser:mypass@localhost/somedatabase"
-#
-# You can use this database configuration with:
-#
-#   production:
-#     url: <%= ENV['DATABASE_URL'] %>
-#
 production:
   <<: *default
-  database: ajax_app_production
-  username: ajax_app
-  password: <%= ENV['AJAX_APP_DATABASE_PASSWORD'] %>
+  adapter: postgresql
+  url: <%= ENV['DATABASE_URL'] %>
+
+  #今回は設定内容がわかりやすいよう、元のコメントは削除。開発環境およびテスト環境ではMySQLが、本番環境ではPostgreSQLが使用されるようになる。
+  #これは、Ruby on Railsアプリケーションのデータベース接続設定ファイルの例です。YAML形式で書かれています。
+#最初に、デフォルトの設定が&defaultで定義されています。これは、encodingをUTF-8に設定し、接続プールの最大スレッド数を環境変数RAILS_MAX_THREADSの値に設定します。
+#その後、development、test、productionという環境ごとの設定が定義されています。それぞれの設定は、<<: *defaultを使用してデフォルトの設定を継承しています。
+#developmentとtest環境では、MySQLデータベースに接続するための設定が定義されています。adapterはmysql2を使用し、ユーザー名とパスワードはrootと空白に設定されています。また、データベース名はそれぞれajax_app_developmentとajax_app_testです。
+#production環境では、PostgreSQLデータベースに接続するための設定が定義されています。adapterはpostgresqlを使用し、接続URLは環境変数DATABASE_URLの値を使用しています。このように、本番環境ではデータベース接続情報を環境変数から取得することが一般的です。#
