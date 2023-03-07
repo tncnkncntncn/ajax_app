@@ -53,3 +53,7 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'pry-rails'
+#本番環境（Renderでの実行時）にPostgreSQLを使用できるようGemを追加
+group :production do
+  gem 'pg'
+end
